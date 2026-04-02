@@ -1,29 +1,29 @@
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainConsistUC2 {
 
     public static void main(String[] args) {
         // 1️⃣ Welcome message
-        System.out.println("=== Train Consist Management App (UC5) ===");
+        System.out.println("=== Train Consist Capacity Mapping App (UC6) ===");
 
-        // 2️⃣ Initialize LinkedHashSet for train formation
-        Set<String> trainFormation = new LinkedHashSet<>();
+        // 2️⃣ Initialize HashMap to store bogie -> capacity
+        Map<String, Integer> bogieCapacityMap = new HashMap<>();
 
-        // 3️⃣ Attach bogies
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        // 3️⃣ Insert bogies and capacities
+        bogieCapacityMap.put("Sleeper", 72);       // 72 seats
+        bogieCapacityMap.put("AC Chair", 108);     // 108 seats
+        bogieCapacityMap.put("First Class", 54);   // 54 seats
+        bogieCapacityMap.put("Cargo", 2000);       // 2000 kg load
+        bogieCapacityMap.put("Guard", 2);          // 2 personnel
 
-        // 4️⃣ Attempt to attach a duplicate bogie
-        trainFormation.add("Sleeper"); // duplicate, ignored automatically
-
-        // 5️⃣ Display final train formation
-        System.out.println("Final train formation (duplicates ignored, order preserved):");
-        System.out.println(trainFormation);
+        // 4️⃣ Iterate and display bogie capacities
+        System.out.println("Bogie Capacities:");
+        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
+        }
 
         // Program continues
-        System.out.println("Train consist safely modeled with LinkedHashSet.");
+        System.out.println("Capacity mapping completed successfully.");
     }
 }
