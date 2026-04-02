@@ -1,26 +1,36 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainConsistUC2 {
 
     public static void main(String[] args) {
         // 1️⃣ Welcome message
-        System.out.println("=== Train Consist Management App (UC3) ===");
+        System.out.println("=== Train Consist Management App (UC4) ===");
 
-        // 2️⃣ Initialize a HashSet for bogie IDs
-        Set<String> bogieIDs = new HashSet<>();
+        // 2️⃣ Initialize a LinkedList for the train consist
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        // 3️⃣ Add bogie IDs (with intentional duplicates)
-        bogieIDs.add("BG101");
-        bogieIDs.add("BG102");
-        bogieIDs.add("BG103");
-        bogieIDs.add("BG101"); // duplicate
-        bogieIDs.add("BG102"); // duplicate
+        // 3️⃣ Add bogies in order
+        trainConsist.add("Engine");    // Locomotive
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC");
+        trainConsist.add("Cargo");
+        trainConsist.add("Guard");     // Guard Coach
 
-        // 4️⃣ Display the final set of unique bogie IDs
-        System.out.println("Unique bogie IDs in train consist: " + bogieIDs);
+        System.out.println("Train consist after adding bogies: " + trainConsist);
+
+        // 4️⃣ Insert a Pantry Car at position 2 (index 2)
+        trainConsist.add(2, "Pantry Car");
+        System.out.println("After inserting Pantry Car at position 2: " + trainConsist);
+
+        // 5️⃣ Remove first and last bogies
+        trainConsist.removeFirst(); // removes Engine
+        trainConsist.removeLast();  // removes Guard
+        System.out.println("After removing first and last bogies: " + trainConsist);
+
+        // 6️⃣ Display final ordered consist
+        System.out.println("Final ordered train consist: " + trainConsist);
 
         // Program continues
-        System.out.println("Bogie ID tracking completed. Duplicates automatically removed.");
+        System.out.println("Train consist operations completed with LinkedList.");
     }
 }
