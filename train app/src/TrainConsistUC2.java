@@ -1,37 +1,54 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TrainConsistUC2 {
 
     public static void main(String[] args) {
 
-        // Step 1: Array of Bogie IDs (unsorted data)
+        // Step 1: Bogie IDs (can be unsorted as well)
         String[] bogieIds = {
-                "BG101",
-                "BG205",
                 "BG309",
-                "BG412",
-                "BG550"
+                "BG101",
+                "BG550",
+                "BG205",
+                "BG412"
         };
 
         Scanner scanner = new Scanner(System.in);
 
-        // Step 2: Take input from user
         System.out.print("Enter Bogie ID to search: ");
-        String searchKey = scanner.nextLine();
+        String key = scanner.nextLine();
 
-        // Step 3: Linear Search
+        // Step 2: Ensure sorting (Binary Search requirement)
+        Arrays.sort(bogieIds);
+
+        // Step 3: Binary Search setup
+        int low = 0;
+        int high = bogieIds.length - 1;
+
         boolean found = false;
 
-        for (int i = 0; i < bogieIds.length; i++) {
+        // Step 4: Binary Search loop
+        while (low <= high) {
 
-            if (bogieIds[i].equals(searchKey)) {
-                System.out.println("Bogie Found at index: " + i);
+            int mid = (low + high) / 2;
+
+            int comparison = key.compareTo(bogieIds[mid]);
+
+            if (comparison == 0) {
+                System.out.println("Bogie Found at index: " + mid);
                 found = true;
-                break; // early termination
+                break;
+            }
+            else if (comparison > 0) {
+                low = mid + 1;
+            }
+            else {
+                high = mid - 1;
             }
         }
 
-        // Step 4: Result display
+        // Step 5: Result output
         if (!found) {
             System.out.println("Bogie NOT Found");
         }
