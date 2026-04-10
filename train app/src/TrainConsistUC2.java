@@ -1,17 +1,14 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class TrainConsistUC2 {
 
     public static void main(String[] args) {
 
-        // Step 1: Bogie IDs (can be unsorted as well)
+        // Step 1: Bogie ID list (you can make it empty to test exception)
         String[] bogieIds = {
-                "BG309",
                 "BG101",
-                "BG550",
                 "BG205",
-                "BG412"
+                "BG309"
         };
 
         Scanner scanner = new Scanner(System.in);
@@ -19,37 +16,25 @@ public class TrainConsistUC2 {
         System.out.print("Enter Bogie ID to search: ");
         String key = scanner.nextLine();
 
-        // Step 2: Ensure sorting (Binary Search requirement)
-        Arrays.sort(bogieIds);
+        // Step 2: Fail-fast validation
+        if (bogieIds.length == 0) {
+            throw new IllegalStateException("No bogies available in the train. Search operation not allowed.");
+        }
 
-        // Step 3: Binary Search setup
-        int low = 0;
-        int high = bogieIds.length - 1;
-
+        // Step 3: Linear Search after validation
         boolean found = false;
 
-        // Step 4: Binary Search loop
-        while (low <= high) {
-
-            int mid = (low + high) / 2;
-
-            int comparison = key.compareTo(bogieIds[mid]);
-
-            if (comparison == 0) {
-                System.out.println("Bogie Found at index: " + mid);
+        for (String id : bogieIds) {
+            if (id.equals(key)) {
                 found = true;
                 break;
             }
-            else if (comparison > 0) {
-                low = mid + 1;
-            }
-            else {
-                high = mid - 1;
-            }
         }
 
-        // Step 5: Result output
-        if (!found) {
+        // Step 4: Output result
+        if (found) {
+            System.out.println("Bogie Found");
+        } else {
             System.out.println("Bogie NOT Found");
         }
 
