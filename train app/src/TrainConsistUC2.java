@@ -4,39 +4,22 @@ public class TrainConsistUC2 {
 
     public static void main(String[] args) {
 
-        // Step 1: Passenger bogie capacities (unsorted input)
-        int[] capacities = {72, 56, 24, 70, 60};
+        // Step 1: Bogie type names (unsorted input)
+        String[] bogieTypes = {
+                "Sleeper",
+                "AC Chair",
+                "First Class",
+                "General",
+                "Luxury"
+        };
 
-        System.out.println("Before Sorting: " + Arrays.toString(capacities));
+        // Display before sorting
+        System.out.println("Before Sorting: " + Arrays.toString(bogieTypes));
 
-        // Step 2: Bubble Sort Logic
-        int n = capacities.length;
-
-        for (int i = 0; i < n - 1; i++) {
-
-            boolean swapped = false;
-
-            for (int j = 0; j < n - i - 1; j++) {
-
-                // Compare adjacent elements
-                if (capacities[j] > capacities[j + 1]) {
-
-                    // Swap logic
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-
-                    swapped = true;
-                }
-            }
-
-            // Optimization: stop if already sorted
-            if (!swapped) {
-                break;
-            }
-        }
+        // Step 2: Built-in sorting (no manual logic)
+        Arrays.sort(bogieTypes);
 
         // Step 3: Display sorted result
-        System.out.println("After Sorting (Bubble Sort): " + Arrays.toString(capacities));
+        System.out.println("After Sorting: " + Arrays.toString(bogieTypes));
     }
 }
