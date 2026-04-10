@@ -1,29 +1,47 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainConsistUC2 {
 
-    public static void main(String[] args) {
-        // 1️⃣ Welcome message
-        System.out.println("=== Train Consist Capacity Mapping App (UC6) ===");
+    // Inner Bogie class
+    static class Bogie {
+        String bogieId;
+        int capacity;
 
-        // 2️⃣ Initialize HashMap to store bogie -> capacity
-        Map<String, Integer> bogieCapacityMap = new HashMap<>();
-
-        // 3️⃣ Insert bogies and capacities
-        bogieCapacityMap.put("Sleeper", 72);       // 72 seats
-        bogieCapacityMap.put("AC Chair", 108);     // 108 seats
-        bogieCapacityMap.put("First Class", 54);   // 54 seats
-        bogieCapacityMap.put("Cargo", 2000);       // 2000 kg load
-        bogieCapacityMap.put("Guard", 2);          // 2 personnel
-
-        // 4️⃣ Iterate and display bogie capacities
-        System.out.println("Bogie Capacities:");
-        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
-            System.out.println(entry.getKey() + " → " + entry.getValue());
+        public Bogie(String bogieId, int capacity) {
+            this.bogieId = bogieId;
+            this.capacity = capacity;
         }
 
-        // Program continues
-        System.out.println("Capacity mapping completed successfully.");
+        public int getCapacity() {
+            return capacity;
+        }
+
+        @Override
+        public String toString() {
+            return "Bogie ID: " + bogieId + ", Capacity: " + capacity;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        // Step 1: Create bogie list (UC7 reuse)
+        List<Bogie> bogies = new ArrayList<>();
+
+        bogies.add(new Bogie("B1", 50));
+        bogies.add(new Bogie("B2", 75));
+        bogies.add(new Bogie("B3", 65));
+        bogies.add(new Bogie("B4", 40));
+        bogies.add(new Bogie("B5", 80));
+
+        // Step 2: Apply Stream filter
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .collect(Collectors.toList());
+
+        // Step 3: Display result
+        System.out.println("Filtered Bogies (Capacity > 60):");
+        filteredBogies.forEach(System.out::println);
     }
 }
