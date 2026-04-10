@@ -1,41 +1,58 @@
-import java.util.Scanner;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class TrainConsistUC2 {
+// ===============================
+// MAIN CLASS (Linear Search Logic)
+// ===============================
+class TrainConsistManagement {
 
-    public static void main(String[] args) {
+    public boolean searchBogie(String[] bogies, String key) {
 
-        // Step 1: Array of Bogie IDs (unsorted data)
-        String[] bogieIds = {
-                "BG101",
-                "BG205",
-                "BG309",
-                "BG412",
-                "BG550"
-        };
-
-        Scanner scanner = new Scanner(System.in);
-
-        // Step 2: Take input from user
-        System.out.print("Enter Bogie ID to search: ");
-        String searchKey = scanner.nextLine();
-
-        // Step 3: Linear Search
-        boolean found = false;
-
-        for (int i = 0; i < bogieIds.length; i++) {
-
-            if (bogieIds[i].equals(searchKey)) {
-                System.out.println("Bogie Found at index: " + i);
-                found = true;
-                break; // early termination
+        // Traverse array sequentially
+        for (String id : bogies) {
+            if (id.equals(key)) {
+                return true;
             }
         }
 
-        // Step 4: Result display
-        if (!found) {
-            System.out.println("Bogie NOT Found");
-        }
+        return false;
+    }
+}
 
-        scanner.close();
+// ===============================
+// TEST CLASS (UC18 Test Cases)
+// ===============================
+public class QuantityMeasurementAppTest {
+
+    TrainConsistManagement obj = new TrainConsistManagement();
+
+    @Test
+    public void testSearch_BogieFound() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertTrue(obj.searchBogie(bogies, "BG309"));
+    }
+
+    @Test
+    public void testSearch_BogieNotFound() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertFalse(obj.searchBogie(bogies, "BG999"));
+    }
+
+    @Test
+    public void testSearch_FirstElementMatch() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertTrue(obj.searchBogie(bogies, "BG101"));
+    }
+
+    @Test
+    public void testSearch_LastElementMatch() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertTrue(obj.searchBogie(bogies, "BG550"));
+    }
+
+    @Test
+    public void testSearch_SingleElementArray() {
+        String[] bogies = {"BG101"};
+        assertTrue(obj.searchBogie(bogies, "BG101"));
     }
 }
