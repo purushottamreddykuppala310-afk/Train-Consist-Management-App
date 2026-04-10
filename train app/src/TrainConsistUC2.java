@@ -1,58 +1,90 @@
 import java.util.Arrays;
-import java.util.Scanner;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class TrainConsistUC2 {
+// ===============================
+// MAIN CLASS (Binary Search Logic)
+// ===============================
+class TrainConsistManagement {
 
-    public static void main(String[] args) {
+    public boolean binarySearch(String[] bogies, String key) {
 
-        // Step 1: Bogie IDs (can be unsorted as well)
-        String[] bogieIds = {
-                "BG309",
-                "BG101",
-                "BG550",
-                "BG205",
-                "BG412"
-        };
+        // Empty array handling
+        if (bogies == null || bogies.length == 0) {
+            return false;
+        }
 
-        Scanner scanner = new Scanner(System.in);
+        // Sort before searching (required for binary search)
+        Arrays.sort(bogies);
 
-        System.out.print("Enter Bogie ID to search: ");
-        String key = scanner.nextLine();
-
-        // Step 2: Ensure sorting (Binary Search requirement)
-        Arrays.sort(bogieIds);
-
-        // Step 3: Binary Search setup
         int low = 0;
-        int high = bogieIds.length - 1;
+        int high = bogies.length - 1;
 
-        boolean found = false;
-
-        // Step 4: Binary Search loop
         while (low <= high) {
 
             int mid = (low + high) / 2;
 
-            int comparison = key.compareTo(bogieIds[mid]);
+            int result = key.compareTo(bogies[mid]);
 
-            if (comparison == 0) {
-                System.out.println("Bogie Found at index: " + mid);
-                found = true;
-                break;
-            }
-            else if (comparison > 0) {
+            if (result == 0) {
+                return true;
+            } else if (result > 0) {
                 low = mid + 1;
-            }
-            else {
+            } else {
                 high = mid - 1;
             }
         }
 
-        // Step 5: Result output
-        if (!found) {
-            System.out.println("Bogie NOT Found");
-        }
+        return false;
+    }
+}
 
-        scanner.close();
+// ===============================
+// TEST CLASS (JUnit Test Cases)
+// ===============================
+public class QuantityMeasurementAppTest {
+
+    TrainConsistManagement obj = new TrainConsistManagement();
+
+    @Test
+    public void testBinarySearch_BogieFound() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertTrue(obj.binarySearch(bogies, "BG309"));
+    }
+
+    @Test
+    public void testBinarySearch_BogieNotFound() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertFalse(obj.binarySearch(bogies, "BG999"));
+    }
+
+    @Test
+    public void testBinarySearch_FirstElementMatch() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertTrue(obj.binarySearch(bogies, "BG101"));
+    }
+
+    @Test
+    public void testBinarySearch_LastElementMatch() {
+        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+        assertTrue(obj.binarySearch(bogies, "BG550"));
+    }
+
+    @Test
+    public void testBinarySearch_SingleElementArray() {
+        String[] bogies = {"BG101"};
+        assertTrue(obj.binarySearch(bogies, "BG101"));
+    }
+
+    @Test
+    public void testBinarySearch_EmptyArray() {
+        String[] bogies = {};
+        assertFalse(obj.binarySearch(bogies, "BG101"));
+    }
+
+    @Test
+    public void testBinarySearch_UnsortedInputHandled() {
+        String[] bogies = {"BG309","BG101","BG550","BG205","BG412"};
+        assertTrue(obj.binarySearch(bogies, "BG205"));
     }
 }
