@@ -1,43 +1,67 @@
-import java.util.Scanner;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class TrainConsistUC2 {
+public class QuantityMeasurementAppTest {
 
-    public static void main(String[] args) {
+    // Helper method (simulate search logic)
+    public boolean searchBogie(String[] bogies, String key) {
 
-        // Step 1: Bogie ID list (you can make it empty to test exception)
-        String[] bogieIds = {
-                "BG101",
-                "BG205",
-                "BG309"
-        };
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter Bogie ID to search: ");
-        String key = scanner.nextLine();
-
-        // Step 2: Fail-fast validation
-        if (bogieIds.length == 0) {
-            throw new IllegalStateException("No bogies available in the train. Search operation not allowed.");
+        if (bogies.length == 0) {
+            throw new IllegalStateException("No bogies available in the train");
         }
 
-        // Step 3: Linear Search after validation
-        boolean found = false;
-
-        for (String id : bogieIds) {
+        for (String id : bogies) {
             if (id.equals(key)) {
-                found = true;
-                break;
+                return true;
             }
         }
+        return false;
+    }
 
-        // Step 4: Output result
-        if (found) {
-            System.out.println("Bogie Found");
-        } else {
-            System.out.println("Bogie NOT Found");
-        }
+    @Test
+    public void testSearch_ThrowsExceptionWhenEmpty() {
+        String[] bogies = {};
 
-        scanner.close();
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            searchBogie(bogies, "BG101");
+        });
+
+        assertEquals("No bogies available in the train", exception.getMessage());
+    }
+
+    @Test
+    public void testSearch_AllowsSearchWhenDataExists() {
+        String[] bogies = {"BG101", "BG205"};
+
+        boolean result = searchBogie(bogies, "BG101");
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void testSearch_BogieFoundAfterValidation() {
+        String[] bogies = {"BG101", "BG205", "BG309"};
+
+        boolean result = searchBogie(bogies, "BG205");
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void testSearch_BogieNotFoundAfterValidation() {
+        String[] bogies = {"BG101", "BG205", "BG309"};
+
+        boolean result = searchBogie(bogies, "BG999");
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void testSearch_SingleElementValidCase() {
+        String[] bogies = {"BG101"};
+
+        boolean result = searchBogie(bogies, "BG101");
+
+        assertTrue(result);
     }
 }
